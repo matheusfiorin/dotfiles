@@ -1,28 +1,51 @@
-;; Package settings
+;; Resource configuration
 (package-initialize)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
 
-;; Set settings
+(load "~/.emacs.rc/rc.el")
+
+;; Display settings
 (setq inhibit-startup-screen t)
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
 (setq display-line-numbers 'relative)
 (setq create-lockfiles nil)
 (set-frame-font "Iosevka 20")
 
-;; Mode settings
+;; General mode settings
 (scroll-bar-mode 0)
 (column-number-mode 1)
 (show-paren-mode 1)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (tab-bar-mode 1)
+
+;;; ido
+(rc/require 'smex 'ido-completing-read+)
+
+(require 'ido-completing-read+)
+
 (ido-mode 1)
 (ido-everywhere 1)
+(ido-ubiquitous-mode 1)
 
-;; Keymap settings
 (keymap-global-set "M-x" 'smex)
 (keymap-global-set "C-c C-c M-x" 'execute-extended-command)
+
+;; Frame size
+(set-frame-size (selected-frame) 180 45)
+
+;; Dired
+(require 'dired-x)
+(setq dired-omit-files
+      (concat dired-omit-files "\\|^\\..+$"))
+(setq-default dired-dwim-target t)
+(setq dired-listing-switches "-alh")
+
+;; Move text
+(require 'move-text)
+(keymap-global-set "M-p" 'move-text-up)
+(keymap-global-set "M-n" 'move-text-down)
+
+;; Keymap settings
 (keymap-global-set "M-[" 'tab-bar-switch-to-prev-tab)
 (keymap-global-set "M-]" 'tab-bar-switch-to-next-tab)
 (keymap-global-set "M-t" 'tab-bar-new-tab)
@@ -30,12 +53,12 @@
 (keymap-global-set "M-o" 'treemacs)
  
 ;; LSP
+(require 'lsp-mode)
 (defun turn-on-lsp-and-paredit ()
   (interactive)
   (paredit-mode 1)
   (lsp-mode 1))
 
-(require 'lsp-mode)
 (add-hook 'clojure-mode-hook 'turn-on-lsp-and-paredit)
 
 ;; Cider
@@ -45,6 +68,27 @@
   (cider-jack-in-clj '(:jack-in-cmd "lein catalyst-repl")))
 
 (add-hook 'clojure-mode-hook #'cider-mode)
+
+;; Whitespace mode
+(defun rc/set-up-whitespace-handling ()
+  (interactive)
+  (whitespace-mode 1)
+  (add-to-list 'write-file-functions 'delete-trailing-whitespace))
+
+(add-hook 'emacs-lisp-mode 'rc/set-up-whitespace-handling)
+(add-hook 'markdown-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'python-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'clojure-mode-hook 'rc/set-up-whitespace-handling)
+
+;; Multiple cursors
+(rc/require 'multiple-cursors)
+
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->")         'mc/mark-next-like-this)
+(global-set-key (kbd "C-<")         'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<")     'mc/mark-all-like-this)
+(global-set-key (kbd "C-\"")        'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-:")         'mc/skip-to-previous-like-this)
 
 ;; Generated code
 (custom-set-variables
@@ -140,7 +184,7 @@
  '(custom-safe-themes
    '("ba4ab079778624e2eadbdc5d9345e6ada531dc3febeb24d257e6d31d5ed02577" default))
  '(package-selected-packages
-   '(eshell-syntax-highlighting lsp-treemacs flycheck flycheck-clojure lsp-ui lsp-mode cider clojure-mode paredit gruber-darker-theme smex)))
+   '(multiple-cursors ido-completing-read+ move-text eshell-syntax-highlighting lsp-treemacs flycheck flycheck-clojure lsp-ui lsp-mode cider clojure-mode paredit gruber-darker-theme smex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
