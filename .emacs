@@ -1,14 +1,16 @@
 ;; Resource configuration
 (package-initialize)
 
-(load "~/.emacs.rc/rc.el")
+(load-file "~/.emacs.rc/rc.el")
+(load-file "~/.emacs.rc/mac.el")
 
 ;; Display settings
 (setq inhibit-startup-screen t)
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
 (setq display-line-numbers 'relative)
 (setq create-lockfiles nil)
-(set-frame-font "Iosevka 20")
+(setq vc-follow-symlinks t)
+(set-frame-font "OverpassM Nerd Font Mono 20")
 
 ;; General mode settings
 (scroll-bar-mode 0)
@@ -17,6 +19,34 @@
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (tab-bar-mode 1)
+
+(keymap-global-set "s-c"       'kill-ring-save)
+(keymap-global-set "s-v"       'yank)
+(keymap-global-set "s-x"       'kill-region)
+(keymap-global-set "s-a"       'mark-whole-buffer)
+(keymap-global-set "s-z"       'undo)
+(keymap-global-set "s-o"       'find-file)
+(keymap-global-set "s-w"       'tab-bar-close-tab)
+(keymap-global-set "s-t"       'tab-bar-new-tab)
+(keymap-global-set "s-s"       'save-buffer)
+(keymap-global-set "s-S"       'mac-save-file-as) 
+(keymap-global-set "s-q"       'save-buffers-kill-emacs)
+(keymap-global-set "s-l"       'goto-line)
+(keymap-global-set "s-k"       'kill-buffer)
+(keymap-global-set "s-<up>"    'beginning-of-buffer)
+(keymap-global-set "s-<down>"  'end-of-buffer)
+(keymap-global-set "s-<left>"  'beginning-of-line)
+(keymap-global-set "s-<right>" 'end-of-line)
+(keymap-global-set "M-<down>"  'forward-paragraph)
+(keymap-global-set "M-<up>"    'backward-paragraph)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+	    (setq display-line-numbers 'relative)))
+
+;; Mac related
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'super)
 
 ;;; ido
 (rc/require 'smex 'ido-completing-read+)
@@ -31,7 +61,7 @@
 (keymap-global-set "C-c C-c M-x" 'execute-extended-command)
 
 ;; Frame size
-(set-frame-size (selected-frame) 180 45)
+(set-frame-size (selected-frame) 140 45)
 
 ;; Dired
 (require 'dired-x)
@@ -41,25 +71,40 @@
 (setq dired-listing-switches "-alh")
 
 ;; Move text
+(rc/require 'move-text)
 (require 'move-text)
 (keymap-global-set "M-p" 'move-text-up)
 (keymap-global-set "M-n" 'move-text-down)
 
 ;; Keymap settings
+(defun mark-line ()
+  "Mark the current line."
+  (interactive)
+  (let ((beg (line-beginning-position))
+        (end (line-end-position)))
+    (push-mark beg t t)
+    (goto-char end)))
+
 (keymap-global-set "M-[" 'tab-bar-switch-to-prev-tab)
 (keymap-global-set "M-]" 'tab-bar-switch-to-next-tab)
+(keymap-global-set "s-[" 'tab-bar-switch-to-prev-tab)
+(keymap-global-set "s-]" 'tab-bar-switch-to-next-tab)
 (keymap-global-set "M-t" 'tab-bar-new-tab)
 (keymap-global-set "M-w" 'tab-bar-close-tab)
 (keymap-global-set "M-o" 'treemacs)
- 
+(keymap-global-set "C-s-v" 'mark-line)
+
 ;; LSP
 (require 'lsp-mode)
 (defun turn-on-lsp-and-paredit ()
   (interactive)
-  (paredit-mode 1)
-  (lsp-mode 1))
+  (lsp-mode 1)
+  (paredit-mode 1))
 
 (add-hook 'clojure-mode-hook 'turn-on-lsp-and-paredit)
+
+;; Auth-source
+(setq auth-sources '("~/.authinfo.json.gpg"))
 
 ;; Cider
 (defun cider-jack-in-catalyst ()
@@ -180,15 +225,14 @@
      (tramp-connection-local-default-system-profile
       (path-separator . ":")
       (null-device . "/dev/null"))))
- '(custom-enabled-themes '(gruber-darker))
+ '(custom-enabled-themes '(catppuccin))
  '(custom-safe-themes
-   '("ba4ab079778624e2eadbdc5d9345e6ada531dc3febeb24d257e6d31d5ed02577" default))
+   '("75fb82e748f32de807b3f9e8c72de801fdaeeb73c791f405d8f73711d0710856" "ba4ab079778624e2eadbdc5d9345e6ada531dc3febeb24d257e6d31d5ed02577" default))
  '(package-selected-packages
-   '(multiple-cursors ido-completing-read+ move-text eshell-syntax-highlighting lsp-treemacs flycheck flycheck-clojure lsp-ui lsp-mode cider clojure-mode paredit gruber-darker-theme smex)))
+   '(treemacs catppuccin-theme multiple-cursors ido-completing-read+ move-text eshell-syntax-highlighting lsp-treemacs flycheck flycheck-clojure lsp-ui lsp-mode cider clojure-mode paredit gruber-darker-theme smex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
