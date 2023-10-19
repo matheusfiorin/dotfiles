@@ -1,6 +1,7 @@
 ;; Resource configuration
 (package-initialize)
 
+(setq debug-on-error t)
 (load-file "~/.emacs.rc/rc.el")
 
 ;; MacOS related setup
@@ -15,7 +16,8 @@
             'move-text
             'multiple-cursors
 	    'catppuccin-theme
-	    'treemacs)
+	    'treemacs
+	    'dired-x)
 
 ;; Setup configuration
 (load-file "~/.emacs.sc/general-keybindings.el")
@@ -34,7 +36,7 @@
  '(custom-safe-themes
    '("75fb82e748f32de807b3f9e8c72de801fdaeeb73c791f405d8f73711d0710856" default))
  '(package-selected-packages
-   '(treemacs catppuccin-theme catppuccin smex multiple-cursors move-text lsp-mode ido-completing-read+ dash-functional)))
+   '(haskell-mode treemacs catppuccin-theme catppuccin smex multiple-cursors move-text lsp-mode ido-completing-read+ dash-functional)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
