@@ -7,4 +7,4 @@
 (show-paren-mode 1)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(tab-bar-mode 1)
+(tab-bar-mode 0)

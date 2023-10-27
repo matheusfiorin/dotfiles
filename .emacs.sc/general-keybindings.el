@@ -10,12 +10,6 @@
     (push-mark beg t t)
     (goto-char end)))
 
-(keymap-global-set "M-["   'tab-bar-switch-to-prev-tab)
-(keymap-global-set "M-]"   'tab-bar-switch-to-next-tab)
-(keymap-global-set "s-["   'tab-bar-switch-to-prev-tab)
-(keymap-global-set "s-]"   'tab-bar-switch-to-next-tab)
-(keymap-global-set "M-w"   'tab-bar-close-tab)
-(keymap-global-set "M-t"   'tab-bar-new-tab)
 (keymap-global-set "C-s-v" 'mark-line)
 
 ;; treemacs
