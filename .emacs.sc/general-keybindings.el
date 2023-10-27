@@ -1,7 +1,6 @@
 ;; smex
 (keymap-global-set "M-x" 'smex)
 
-;; tab-bar related
 (defun mark-line ()
   "Mark the current line."
   (interactive)
@@ -11,10 +10,6 @@
     (goto-char end)))
 
 (keymap-global-set "C-s-v" 'mark-line)
-
-;; treemacs
-(require 'treemacs)
-(keymap-global-set "M-o" 'treemacs)
 
 ;; move text
 (require 'move-text)

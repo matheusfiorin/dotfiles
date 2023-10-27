@@ -4,11 +4,6 @@
 (setq debug-on-error t)
 (load-file "~/.emacs.rc/rc.el")
 
-;; MacOS related setup
-(when (eq system-type 'darwin)
-  (load-file "~/.emacs.rc/mac.el")
-  (load-file "~/.emacs.sc/mac.el"))
-
 ;; Required packages
 (rc/require 'lsp-mode
 	    'smex
@@ -16,7 +11,6 @@
             'move-text
             'multiple-cursors
 	    'catppuccin-theme
-	    'treemacs
 	    'which-key
 	    'centaur-tabs)
 
@@ -43,7 +37,4 @@
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(tab-bar ((t :background "#333333" :foreground "#ffffff")))
- '(tab-bar-tab ((t :background "#555555" :foreground "#ffffff" :box nil)))
- '(tab-bar-tab-inactive ((t :background "#222222" :foreground "#888888" :box nil))))
+ ;; If there is more than one, they won't work right.)
