@@ -1,5 +1,5 @@
 ;; smex
-(keymap-global-set "M-x" 'smex)
+(global-set-key (kbd "M-x") 'smex)
 
 (defun mark-line ()
   "Mark the current line."
@@ -9,18 +9,18 @@
     (push-mark beg t t)
     (goto-char end)))
 
-(keymap-global-set "C-s-v" 'mark-line)
+(global-set-key (kbd "C-s-v") 'mark-line)
 
 ;; move text
 (require 'move-text)
-(keymap-global-set "M-p" 'move-text-up)
-(keymap-global-set "M-n" 'move-text-down)
+(global-set-key (kbd "M-p") 'move-text-up)
+(global-set-key (kbd "M-n") 'move-text-down)
 
 ;; multiple cursors
 (require 'multiple-cursors)
-(keymap-global-set "C-S-c C-S-c" 'mc/edit-lines)
-(keymap-global-set "C->"         'mc/mark-next-like-this)
-(keymap-global-set "C-<"         'mc/mark-previous-like-this)
-(keymap-global-set "C-c C-<"     'mc/mark-all-like-this)
-(keymap-global-set "C-\""        'mc/skip-to-next-like-this)
-(keymap-global-set "C-:"         'mc/skip-to-previous-like-this)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->")         'mc/mark-next-like-this)
+(global-set-key (kbd "C-<")         'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<")     'mc/mark-all-like-this)
+(global-set-key (kbd "C-\"")        'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-:")         'mc/skip-to-previous-like-this)

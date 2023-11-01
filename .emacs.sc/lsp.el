@@ -1,7 +1,11 @@
 (require 'lsp-mode)
+(defun turn-on-lsp ()
+  (interactive)
+  (lsp-mode 1))
 (defun turn-on-lsp-and-paredit ()
   (interactive)
-  (lsp-mode 1)
+  (turn-on-lsp)
   (paredit-mode 1))
 
 (add-hook 'clojure-mode-hook 'turn-on-lsp-and-paredit)
+(add-hook 'haskell-mode-hook 'turn-on-lsp)

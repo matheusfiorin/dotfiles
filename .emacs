@@ -12,9 +12,11 @@
             'multiple-cursors
 	    'catppuccin-theme
 	    'which-key
-	    'centaur-tabs)
+	    'centaur-tabs
+	    'all-the-icons)
 
 ;; Setup configuration
+(setq force-load-messages t)
 (load-file "~/.emacs.sc/general-keybindings.el")
 (load-file "~/.emacs.sc/display.el")
 (load-file "~/.emacs.sc/backup.el")
@@ -22,6 +24,8 @@
 (load-file "~/.emacs.sc/ido.el")
 (load-file "~/.emacs.sc/lsp.el")
 (load-file "~/.emacs.sc/tab.el")
+
+(which-key-mode t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -32,7 +36,7 @@
  '(custom-safe-themes
    '("75fb82e748f32de807b3f9e8c72de801fdaeeb73c791f405d8f73711d0710856" default))
  '(package-selected-packages
-   '(centaur-tabs all-the-icons paredit clojure-mode lsp-dart dart-mode flutter dired-x which-key web-mode haskell-mode treemacs catppuccin-theme catppuccin smex multiple-cursors move-text lsp-mode ido-completing-read+ dash-functional)))
+   '(lsp-haskell dired-rainbow centaur-tabs all-the-icons paredit clojure-mode lsp-dart dart-mode flutter dired-x which-key web-mode haskell-mode catppuccin-theme catppuccin smex multiple-cursors move-text lsp-mode ido-completing-read+)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
