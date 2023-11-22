@@ -13,8 +13,30 @@
 (keymap-global-set "C-<"     'mc/mark-previous-like-this)
 (keymap-global-set "C-c C-<" 'mc/mark-all-like-this)
 
-;; LSP setup
+(keymap-global-set "C-c p s" 'lsp-clojure-forward-slurp)
+(keymap-global-set "C-c p b" 'lsp-clojure-forward-barf)
 
+(require 'neotree)
+(keymap-global-set "<f8>" 'neotree-toggle)
+(keymap-global-set "C-c n s" 'neotree-show)
+(keymap-global-set "C-c n f" 'neotree-find)
+(setq neo-smart-open t)
+(setq projectile-switch-project-action 'neotree-projectile-action)
+
+(defun neotree-project-dir ()
+    "Open NeoTree using the git root."
+    (interactive)
+    (let ((project-dir (ffip-project-root))
+          (file-name (buffer-file-name)))
+      (if project-dir
+          (progn
+            (neotree-dir project-dir)
+            (neotree-find file-name))
+        (message "Could not find git project root."))))
+
+(keymap-global-set "C-c C-p" 'neotree-project-dir)
+
+;; LSP setup
 (use-package lsp-mode
   :ensure t
   :hook ((clojure-mode . lsp)
@@ -39,16 +61,27 @@
   :ensure t)
 
 ;; Clojure setup
-
 (unless (package-installed-p 'clojure-mode)
   (package-install 'clojure-mode))
 
 (unless (package-installed-p 'cider)
   (package-install 'cider))
 
+;; Company setup
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; Projectile setup
+(add-hook 'after-init-hook 'projectile-mode)
+(keymap-global-set "C-c p" 'projectile-command-map)
+
 ;; Theme setup
+(set-face-attribute 'default nil :height 160)
+
 (setq catppuccin-flavor 'latte)
-(load-theme 'catppuccin :no-confirm)
+
+(set-frame-font "Monaspace Neon-16" nil t)
+
+
 
 ;; Cider workaround to run ns integration tests using stateflow
 (setq cider-test-infer-test-ns (lambda (ns) ns))
